@@ -29,7 +29,7 @@ async function run() {
     const brandsCollection = client.db('productDB').collection('brands');
 
     // get review data of client
-    app.get('/brands', async (req, res) => {
+    app.get('/brand-name', async (req, res) => {
       const result = await brandsCollection.find().toArray();
       res.send(result);
     });
@@ -115,9 +115,14 @@ async function run() {
       res.send(result);
     });
     // get data of brands
-    app.get('/products', async (req, res) => {
-      const cursor = await productCollection.find({}).toArray();
-      res.send(cursor);
+    app.get('/car-brand', async (req, res) => {
+      let query = {};
+      if (req.query?.name) {
+        query = { name: req.query.name };
+      }
+      console.log(query);
+      const result = await productCollection.find(query).toArray();
+      res.send(result);
     });
 
     // Send a ping to confirm a successful connection
