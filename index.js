@@ -26,6 +26,13 @@ async function run() {
     const productCollection = client.db('productDB').collection('product');
     const reviewsCollection = client.db('productDB').collection('reviews');
     const cartCollection = client.db('productDB').collection('cart');
+    const brandsCollection = client.db('productDB').collection('brands');
+
+    // get review data of client
+    app.get('/brands', async (req, res) => {
+      const result = await brandsCollection.find().toArray();
+      res.send(result);
+    });
 
     // post review data of client
     app.post('/reviews', async (req, res) => {
