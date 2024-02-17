@@ -27,6 +27,7 @@ async function run() {
     const reviewsCollection = client.db('productDB').collection('reviews');
     const cartCollection = client.db('productDB').collection('cart');
     const brandsCollection = client.db('productDB').collection('brands');
+    const blogsCollection = client.db('productDB').collection('blogs');
 
     // get review data of client
     app.get('/brand-name', async (req, res) => {
@@ -34,6 +35,11 @@ async function run() {
       res.send(result);
     });
 
+    // get review data of client
+    app.get('/blogs', async (req, res) => {
+      const result = await blogsCollection.find().toArray();
+      res.send(result);
+    });
     // post review data of client
     app.post('/reviews', async (req, res) => {
       const newReview = req.body;
