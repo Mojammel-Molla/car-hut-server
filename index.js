@@ -29,6 +29,15 @@ async function run() {
     const brandsCollection = client.db('productDB').collection('brands');
     const blogsCollection = client.db('productDB').collection('blogs');
 
+    // Post Jwt token
+    app.post('/jwt', async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: '1hr',
+      });
+      res.send({ success: true });
+    });
+
     // get review data of client
     app.get('/brand-name', async (req, res) => {
       const result = await brandsCollection.find().toArray();
