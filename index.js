@@ -28,6 +28,7 @@ async function run() {
     const cartCollection = client.db('productDB').collection('cart');
     const brandsCollection = client.db('productDB').collection('brands');
     const blogsCollection = client.db('productDB').collection('blogs');
+    const usersCollection = client.db('productDB').collection('users');
 
     // Post Jwt token
     app.post('/jwt', async (req, res) => {
@@ -36,6 +37,18 @@ async function run() {
         expiresIn: '1hr',
       });
       res.send({ success: true });
+    });
+
+    // post users data
+    app.post('/users', async (req, res) => {
+      const newUser = req.body;
+      const result = await usersCollection.insertOne(newUser);
+      res.send(result);
+    });
+    // get users data
+    app.get('/users', async (req, res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result);
     });
 
     // get review data of client
