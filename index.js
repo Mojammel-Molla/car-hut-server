@@ -50,6 +50,13 @@ async function run() {
       const result = await usersCollection.find().toArray();
       res.send(result);
     });
+    // delete users data
+    app.delete('/users/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await usersCollection.deleteOne(query);
+      res.send(result);
+    });
 
     // get review data of client
     app.get('/brand-name', async (req, res) => {
